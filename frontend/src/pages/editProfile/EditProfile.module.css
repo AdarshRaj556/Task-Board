@@ -1,0 +1,65 @@
+.editProfileContainer {
+  width: 420px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Title */
+.editProfileContainer h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Button container */
+.editProfileContainer .optionButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.editProfileContainer button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2563eb;
+  margin-left: 1px;
+  margin-right: 1px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.editProfileContainer button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Form layout */
+.editProfileContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Inputs */
+.editProfileContainer input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Error message */
+.editProfileContainer p {
+  color: red;
+  font-size: 14px;
+}
+
+/* Divider */
+.editProfileContainer hr {
+  margin: 20px 0;
+}

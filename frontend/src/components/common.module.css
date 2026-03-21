@@ -1,0 +1,82 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.meta{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+
+.createProjectForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 30px;
+  right: 100px;
+  align-content: center;
+  gap: 3.5px;
+  height: auto;
+  border-radius: 4px;
+  padding: 4px;
+  margin: 2px;
+  background-color: rgb(255, 228, 196);
+  border: 2px solid rgb(201, 167, 126);
+}
+
+.projectName{
+  height: auto;
+}
+.description{
+  height: auto;
+}
+.button{
+  padding: 6px 12px;
+  border: none;
+  background: rgb(144, 102, 227);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+}
+
+.inputData{
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 10px;
+
+}
+
+.options{
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 5px;
+  background-color: rgb(212, 228, 228);
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.option:hover{
+  opacity: 0.8;
+  cursor: pointer;
+}
+.emails{
+  height: 25px;
+}
+.button:hover{
+  opacity: 0.8;
+}

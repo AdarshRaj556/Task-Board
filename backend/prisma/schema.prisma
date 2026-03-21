@@ -1,0 +1,204 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url =env("DATABASE_URL")
+}
+
+enum GlobalRole {
+  ADMIN
+  USER
+}
+
+enum ProjectRole {
+  GLOBAL_ADMIN
+  MEMBER
+  PROJECT_ADMIN
+  PROJECT_VEIWER
+}
+
+enum PriorityType {
+  LOW
+  MEDIUM 
+  HIGH
+  CRITICAL
+}
+
+enum IssueType {
+  STORY
+  TASK
+  BUG
+}
+enum NotificationType {
+  TASK_ASSIGNED
+  TASK_STATUS_CHANGED
+  COMMENT_ADDED
+  USER_MENTIONED
+  NO_USER_ASSIGNED
+} 
+
+enum AuditType {
+  STATUS_CHANGED
+  ASSIGNEE_CHANGED
+  COMMENT_ADDED
+  COMMENT_EDITED
+  COMMENT_DELETED
+}
+model User { 
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @unique
+  firstName   String
+  middleName  String?  @default("")
+  lastName    String?  @default("")
+  password    String
+  avatarUrl   String? 
+  public_id String?
+  refreshToken String?
+  comments Comment[]
+  notifications Notification[] @relation("NotificationReceiver")
+  actorNotifications Notification[] @relation("NotificationActor")
+  reportedIssues Issue[] @relation("ReportedIssues")
+  assignedIssues Issue[] @relation("AssignedIssues")
+  role        GlobalRole @default(USER)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  memberships ProjectMember[]
+}
+
+model Project {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String   @unique
+  description  String
+  createdAt    DateTime @default(now())
+  modifiedAt   DateTime @updatedAt
+  boards Board[]
+  memberships ProjectMember[]
+
+}
+
+model ProjectMember {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  projectId String   @db.ObjectId
+  role      ProjectRole
+  user      User     @relation(fields: [userId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
+  createdAt DateTime @default(now())
+  @@unique([userId, projectId])
+}
+
+model Board{
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  projectId String @db.ObjectId
+  
+  project Project @relation(fields: [projectId], references: [id], onDelete:Cascade)
+  columns Column[]
+  issues Issue[]
+}
+
+model Column{
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  boardId String @db.ObjectId
+  board Board @relation(fields: [boardId], references: [id], onDelete:Cascade)
+  name String 
+  order Int
+  wipLimit Int
+  isFinal Boolean @default(false)
+  issues Issue[]
+  @@unique([boardId, name])
+}
+
+model Story{
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  boardId String @db.ObjectId
+  name String
+  issues Issue[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Issue{
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+
+  priority PriorityType @default(MEDIUM)
+
+  order Int
+  columnId String @db.ObjectId
+  column Column @relation(fields: [columnId], references: [id], onDelete:Cascade)
+
+  boardId String @db.ObjectId
+  board Board @relation(fields: [boardId] , references: [id])
+
+  reporterId String @db.ObjectId
+  assigneeId String? @db.ObjectId
+  reporter User @relation("ReportedIssues",fields: [reporterId], references: [id])
+  assignee User? @relation("AssignedIssues",fields: [assigneeId], references: [id])
+
+  storyId String? @db.ObjectId 
+  story Story? @relation(fields: [storyId], references: [id], onDelete:Cascade)
+  type IssueType @default(TASK)
+
+  comments Comment[]
+  audit AuditLog[]
+  notification Notification[]
+  dueDate DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment{
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  issueId String @db.ObjectId
+  issue Issue @relation(fields: [issueId],references: [id], onDelete:Cascade)
+  comment String
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
+  notifications Notification[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  issueId   String   @db.ObjectId
+  issue     Issue    @relation(fields: [issueId], references: [id] , onDelete:Cascade)
+  oldValue  String @default("")
+  newValue  String @default("")
+  type AuditType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  resolvedAt DateTime?
+  closedAt DateTime?
+}
+
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  actorId   String?   @db.ObjectId
+
+  user User @relation("NotificationReceiver", fields: [userId], references: [id])
+  actor User? @relation("NotificationActor", fields: [actorId], references: [id])
+
+  issueId    String?  @db.ObjectId
+  issue Issue? @relation(fields: [issueId],references: [id])
+  commentId String?  @db.ObjectId
+  comment Comment? @relation(fields: [commentId], references: [id])
+
+  type      NotificationType
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

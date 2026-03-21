@@ -1,0 +1,20 @@
+import express from 'express';
+import { cookieParser } from './middlewares/cookieParser';
+const app = express();
+app.use(express.json());
+app.use(cookieParser);
+import { authRouter } from './routes/auth';
+import { adminRouter } from './routes/admin';
+import { profileRouter } from './routes/profile';
+import { projectRouter } from './routes/project';
+import { boardRouter } from './routes/board';
+import { issueRouter } from './routes/issue';
+import { commentRouter } from './routes/comments';
+app.use("/",authRouter,profileRouter,adminRouter);
+app.use("/project",projectRouter);
+app.use("/project/board",boardRouter);
+app.use("/project/board/issue",issueRouter);
+app.use("/project/board/comment/:projectId",commentRouter);
+app.listen(8080, () => {
+  console.log("server is listening at port 8080");
+});
