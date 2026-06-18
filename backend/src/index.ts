@@ -10,11 +10,13 @@ import { projectRouter } from './routes/project';
 import { boardRouter } from './routes/board';
 import { issueRouter } from './routes/issue';
 import { commentRouter } from './routes/comments';
+import { notificationRouter } from './routes/notification';
 app.use("/",authRouter,profileRouter,adminRouter);
 app.use("/project",projectRouter);
 app.use("/project/board",boardRouter);
 app.use("/project/board/issue",issueRouter);
 app.use("/project/board/comment/:projectId",commentRouter);
+app.use("/notifications",notificationRouter);
 app.listen(8080, () => {
   console.log("server is listening at port 8080");
 });

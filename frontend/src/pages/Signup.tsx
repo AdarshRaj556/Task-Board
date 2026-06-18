@@ -1,11 +1,10 @@
-import { useState} from "react";
-import styles from "../pages/Signup.module.css";
+import { useState } from "react";
+import styles from "./Signup.module.css";
 import { signUpUser } from "../api/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -13,19 +12,10 @@ export default function SignUp() {
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: { preventDefault(): void }) => {
     e.preventDefault();
-
     try {
-      const data = await signUpUser(
-        firstName,
-        middleName,
-        lastName,
-        email,
-        password
-      );
-
-      console.log("Signed Up:", data.user);
+      await signUpUser(firstName, middleName, lastName, email, password);
       navigate("/");
     } catch (err: any) {
       setError(err.message);
@@ -33,66 +23,82 @@ export default function SignUp() {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <h2>Sign Up</h2>
+    <div className={styles.page}>
+      <div className={styles.card}>
+        <div className={styles.cardTop}>
+          <div className={styles.appName}>IssueTracker</div>
+          <div className={styles.appTagline}>Project management made simple</div>
+        </div>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.formTitle}>Create your account</div>
 
-        {error && <p className={styles.error}>{error}</p>}
+          {error && <div className={styles.error}>{error}</div>}
 
-        <input
-          name="firstName"
-          type="text"
-          placeholder="First Name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          autoComplete="given-name"
-          required
-        />
+          <div className={styles.nameRow}>
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>First Name *</label>
+              <input
+                type="text"
+                placeholder="First"
+                value={firstName}
+                onChange={e => setFirstName(e.target.value)}
+                autoComplete="given-name"
+                required
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Last Name</label>
+              <input
+                type="text"
+                placeholder="Last"
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+                autoComplete="family-name"
+              />
+            </div>
+          </div>
 
-        <input
-          name="middleName"
-          type="text"
-          placeholder="Middle Name"
-          value={middleName}
-          onChange={(e) => setMiddleName(e.target.value)}
-          autoComplete="additional-name"
-        />
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Middle Name (optional)</label>
+            <input
+              type="text"
+              placeholder="Middle name"
+              value={middleName}
+              onChange={e => setMiddleName(e.target.value)}
+              autoComplete="additional-name"
+            />
+          </div>
 
-        <input
-          name="lastName"
-          type="text"
-          placeholder="Last Name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          autoComplete="family-name"
-        />
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Email address *</label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              autoComplete="email"
+              required
+            />
+          </div>
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-          required
-        />
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Password *</label>
+            <input
+              type="password"
+              placeholder="Choose a password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              autoComplete="new-password"
+              required
+            />
+          </div>
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="new-password"
-          required
-        />
-
-        <button type="submit">Sign Up</button>
-
-        <p className={styles.signupText}>
-          Already have an account? <Link to="/">Login</Link>
-        </p>
-      </form>
+          <button type="submit" className={styles.submitBtn}>Create Account</button>
+          <p className={styles.signupText}>
+            Already have an account? <Link to="/">Sign in</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,51 +1,213 @@
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-.container{
+.container {
   display: grid;
-  grid-template-columns: 150px auto;
-  min-height: 100vh;
-  gap: 1em ;
-  /* background-color: rgb(243, 243, 228); */
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 52px);
 }
 
-.sidebar{
-  background-color: azure;
-  border: 2px solid rgb(163, 255, 255);
-  padding: 2px;
+/* ── Sidebar ── */
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 16px 10px;
+  overflow-y: auto;
 }
 
-.heading{
-  font-size: x-large;
-  border-width: 2px;
-  margin-bottom: 10px;
-  border: 2px solid green;
-  border-radius: 5px;
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e5e7eb;
 }
-.project{
-  font-size: 16px;
+
+.sidebarTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sidebarCount {
+  font-size: 11px;
+  background: #e0eaff;
+  color: #2563eb;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.project {
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #374151;
+  margin-bottom: 2px;
+  white-space: nowrap;
   overflow: hidden;
-  margin: 4.5px;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.projectDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d1d5db;
+  flex-shrink: 0;
+}
+
+/* ── Main area ── */
+.main {
+  padding: 24px 28px;
+  background: #f8fafc;
+  overflow-y: auto;
+}
+
+.mainHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.mainHeading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.resultCount {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 18px 16px 14px;
+  cursor: pointer;
+  transition: box-shadow 0.15s, border-color 0.15s, transform 0.1s;
   display: flex;
   flex-direction: column;
-  padding: 3 px;
+  gap: 6px;
 }
-.project:hover{
-  background-color: rgb(191, 230, 230);
-  cursor: pointer;
+
+.card:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
 }
-.meta{
-  z-index: 100;
+
+.cardIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.cardName {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardDesc {
+  font-size: 12px;
+  color: #6b7280;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.cardRole {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cardArrow {
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+/* ── Empty states ── */
+.emptyMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #9ca3af;
+  text-align: center;
+  gap: 8px;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.emptyText {
+  font-size: 15px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.emptySubText {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ── Metadata popup ── */
+.meta {
+  z-index: 1000;
   position: absolute;
-  top: 100px;
-  left: 95px;
-  padding: 4px;
-  border-width: 2px ;
-  border-style: double;
-  border-color: rgb(182, 163, 138);
-  background-color: bisque;
-  border-radius: 5px;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }

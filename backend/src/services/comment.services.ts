@@ -4,8 +4,8 @@ import { AuditType, User } from "../../generated/prisma/client";
 import { auditLog } from "../utils/auditLog";
 import { extractMentions } from "../utils/miscellaneous";
 export const postCommentService= async (user: User, comment:string, issueId:string)=>{
-    const validComment= comment.trim();
-    if(!validComment){
+    const stripped = comment.replace(/<[^>]*>/g, "").trim();
+    if(!stripped){
         throw new Error("comment should not be empty");
     }
     const issue= await prisma.issue.findUnique({
@@ -23,7 +23,7 @@ export const postCommentService= async (user: User, comment:string, issueId:stri
             }
         })
         
-        const mentionedEmails = extractMentions(validComment);
+        const mentionedEmails = extractMentions(comment);
         let mentionedUsers: User[] = [];
         if (mentionedEmails.length > 0) {
             mentionedUsers = await tx.user.findMany({

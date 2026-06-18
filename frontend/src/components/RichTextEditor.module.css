@@ -1,0 +1,66 @@
+.wrapper {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+  background: white;
+  flex: 1;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 8px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.toolBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.toolBtn:hover {
+  background: #e5e7eb;
+}
+
+.sep {
+  width: 1px;
+  height: 16px;
+  background: #d1d5db;
+  margin: 0 4px;
+}
+
+.editor {
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #111827;
+  outline: none;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.editor:empty::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.editor ul {
+  padding-left: 18px;
+}
+
+.editor code {
+  background: #f3f4f6;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+}

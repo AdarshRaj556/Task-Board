@@ -13,9 +13,10 @@ export const postComment = async (req:AuthRequest,res:Response)=>{
             message:"Comment Posted Successfully",
             data:postComment
         })
-    }catch(err){
+    }catch(err:any){
+        console.error("postComment error:", err);
         return res.status(500).json({
-            message: "Internal Server Error "
+            message: err?.message || "Internal Server Error"
         });
     }
 }

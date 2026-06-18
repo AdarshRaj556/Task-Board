@@ -22,8 +22,8 @@ export function ChangePassword(){
 
             <form onSubmit={handleSubmit}>
                 {error && <p>{error}</p>}
-                <input 
-                    type="text"
+                <input
+                    type="password"
                     name="oldPassword"
                     placeholder="Old Password"
                     value={oldPassword}

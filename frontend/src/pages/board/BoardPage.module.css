@@ -1,0 +1,325 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  flex: 1;
+}
+
+.backBtn {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.backBtn:hover { background: #f3f4f6; }
+
+.addColBtn {
+  padding: 5px 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.addColBtn:hover { background: #1d4ed8; }
+
+.addColForm {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.addColForm input {
+  padding: 5px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 13px;
+  width: 150px;
+}
+
+.addColForm input[type="number"] {
+  width: 70px;
+}
+
+.addColForm button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  background: #2563eb;
+  color: white;
+}
+
+.addColForm button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.board {
+  display: flex;
+  gap: 14px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  flex: 1;
+  align-items: flex-start;
+}
+
+.column {
+  background: #f3f4f6;
+  border-radius: 10px;
+  width: 260px;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.columnName {
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+}
+
+.columnCount {
+  font-size: 12px;
+  color: #9ca3af;
+  background: #e5e7eb;
+  padding: 1px 7px;
+  border-radius: 8px;
+}
+
+.wipWarning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.deleteColBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 0 2px;
+}
+
+.deleteColBtn:hover { color: #ef4444; }
+
+.dragOver {
+  background: #eff6ff;
+  border: 2px dashed #3b82f6;
+}
+
+.renameInput {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  border: none;
+  border-bottom: 2px solid #3b82f6;
+  background: transparent;
+  outline: none;
+  padding: 0 2px;
+  min-width: 0;
+}
+
+.issues {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.issueCard {
+  background: white;
+  border-radius: 7px;
+  padding: 10px 12px;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: box-shadow 0.12s;
+}
+
+.issueCard:hover {
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  border-color: #a5b4fc;
+}
+
+.issueTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+  line-height: 1.4;
+}
+
+.issueMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge.low { background: #d1fae5; color: #065f46; }
+.badge.medium { background: #dbeafe; color: #1e40af; }
+.badge.high { background: #ffedd5; color: #9a3412; }
+.badge.critical { background: #fee2e2; color: #991b1b; }
+.badge.task { background: #f3f4f6; color: #374151; }
+.badge.story { background: #ede9fe; color: #5b21b6; }
+.badge.bug { background: #fee2e2; color: #991b1b; }
+
+.assigneeSmall {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.assigneePlaceholder {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.addIssueBtn {
+  margin: 0 10px 10px;
+  padding: 7px;
+  background: none;
+  border: 1px dashed #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  transition: background 0.1s;
+}
+
+.addIssueBtn:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.addIssueForm {
+  margin: 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+.addIssueForm input,
+.addIssueForm textarea,
+.addIssueForm select {
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: inherit;
+  width: 100%;
+}
+
+.addIssueForm textarea {
+  resize: none;
+  height: 56px;
+}
+
+.formRow {
+  display: flex;
+  gap: 6px;
+}
+
+.formRow select {
+  flex: 1;
+}
+
+.formActions {
+  display: flex;
+  gap: 6px;
+}
+
+.submitBtn {
+  flex: 1;
+  padding: 6px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.cancelBtn {
+  padding: 6px 10px;
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.cancelBtn:hover { background: #f3f4f6; }
+
+.empty {
+  padding: 20px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}

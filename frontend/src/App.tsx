@@ -3,7 +3,9 @@ import Login from "../src/pages/Login";
 import Signup from "../src/pages/Signup";
 import Profile from "./pages/profile/profile";
 import EditProfile from "./pages/editProfile/EditProfile";
-import DevTest from "./pages/DevTest";
+import ProjectPage from "./pages/project/ProjectPage";
+import BoardPage from "./pages/board/BoardPage";
+
 function App() {
     return (
     <BrowserRouter>
@@ -12,10 +14,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/profile/editProfile" element={<EditProfile/>}/>
-        <Route path="/dev" element={<DevTest />} />
+        <Route path="/project/:projectId" element={<ProjectPage/>}/>
+        <Route path="/project/:projectId/board/:boardId" element={<BoardPage/>}/>
       </Routes>
     </BrowserRouter>
-
   );
 }
 

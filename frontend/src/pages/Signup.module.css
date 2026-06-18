@@ -1,48 +1,116 @@
-.signupText {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-
-.container {
-  height: 100vh;
+.page {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f4f4f4;
+  background: #f0f7ff;
+  padding: 20px;
+}
+
+.card {
+  width: 420px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(37, 99, 235, 0.1);
+  overflow: hidden;
+}
+
+.cardTop {
+  background: #2563eb;
+  padding: 22px 28px 18px;
+  text-align: center;
+}
+
+.appName {
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.appTagline {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 3px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: white;
-  padding: 30px;
-  width: 320px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  padding: 22px 28px 28px;
+}
+
+.formTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
 }
 
 .form input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 14px;
 }
 
-.form button {
-  padding: 10px;
+.form input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.submitBtn {
+  padding: 11px;
   border: none;
   background: #2563eb;
   color: white;
-  font-weight: bold;
-  border-radius: 5px;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 7px;
   cursor: pointer;
+  margin-top: 4px;
 }
 
-.form button:hover {
-  background: #1e40af;
+.submitBtn:hover {
+  background: #1d4ed8;
+}
+
+.signupText {
+  font-size: 13px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.signupText a {
+  color: #2563eb;
+  font-weight: 600;
 }
 
 .error {
-  color: red;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #fecaca;
 }

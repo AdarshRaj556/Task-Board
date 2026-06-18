@@ -54,4 +54,25 @@ projectRouter.get("/allMember/:projectId",userAuth, async (req:AuthRequest,res:R
     }
 })
 
+projectRouter.patch("/update/:projectId", userAuth, async (req: AuthRequest, res: Response) => {
+    try {
+        const userId = req.user!.id;
+        const { projectId } = req.params;
+        const member = await prisma.projectMember.findUnique({
+            where: { userId_projectId: { userId, projectId: projectId as string } }
+        });
+        if (!member || (member.role !== "GLOBAL_ADMIN" && member.role !== "PROJECT_ADMIN")) {
+            return res.status(403).json({ message: "Not authorized" });
+        }
+        const { name, description } = req.body;
+        const updated = await prisma.project.update({
+            where: { id: projectId as string },
+            data: { ...(name && { name }), ...(description !== undefined && { description }) }
+        });
+        return res.status(200).json({ data: updated });
+    } catch (err: any) {
+        return res.status(500).json({ message: err.message || "Internal Server Error" });
+    }
+});
+
 export {projectRouter}

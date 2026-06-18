@@ -62,6 +62,14 @@ export const changeColumnService = async (boardId:string,userId:string,
         });
         if (!issue) throw new Error("Issue not found");
 
+        // Enforce WIP limit when moving to a different column
+        if (columnId !== toColumnId) {
+            const destCount = await tx.issue.count({ where: { columnId: toColumnId } });
+            if (destCount >= toColumn.wipLimit) {
+                throw new Error(`WIP limit reached for column "${toColumn.name}" (max ${toColumn.wipLimit})`);
+            }
+        }
+
         if (column.boardId !== boardId) {
             throw new Error("Column does not belong to this project");
         }
@@ -197,3 +205,25 @@ export const assignIssueService = async (projectId:string,actor:User,assigneeId:
         }
     })
 }
+
+export const editIssueService = async (
+    issueId: string,
+    data: { title?: string; description?: string; priority?: PriorityType; dueDate?: Date | null }
+) => {
+    const issue = await prisma.issue.findUnique({ where: { id: issueId } });
+    if (!issue) throw new Error("Issue not found");
+    return await prisma.issue.update({ where: { id: issueId }, data });
+};
+
+export const deleteIssueService = async (issueId: string) => {
+    const issue = await prisma.issue.findUnique({ where: { id: issueId } });
+    if (!issue) throw new Error("Issue not found");
+    await prisma.issue.delete({ where: { id: issueId } });
+};
+
+export const getIssueActivityService = async (issueId: string) => {
+    return await prisma.auditLog.findMany({
+        where: { issueId },
+        orderBy: { createdAt: 'asc' }
+    });
+};

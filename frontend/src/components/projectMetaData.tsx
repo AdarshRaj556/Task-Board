@@ -11,23 +11,21 @@ export default function ProjectMetaData({project}:ProjectMetaDataProps){
 
     return (
         <div className={styles.meta}>
-            <button className={styles.button} onClick={()=>{
-                setShowAddMember(true);
-            }}>Add Member</button>
-            {showAddMember && <AddMember emails={emails} setEmails={setEmails} projectId={project.id}/>}
-            <div className={styles.name}><span className={styles.bold}>Project Name:</span>{project.name}</div>
-            <div className={styles.description}><span className={styles.bold}>Project Description:</span>{project.description}</div>
-            <div className={styles.time}><span className={styles.bold}>Created At:</span>{project.createdAt.toLocaleString("en-IN", {
+            <div className={styles.name}><span className={styles.bold}>Project Name: </span>{project.name}</div>
+            <div className={styles.description}><span className={styles.bold}>Description: </span>{project.description || "—"}</div>
+            <div className={styles.time}><span className={styles.bold}>Created: </span>{project.createdAt.toLocaleString("en-IN", {
                     dateStyle: "medium",
                     timeStyle: "short"
                 })}
             </div>
-            <div className={styles.time}><span className={styles.bold}>Updated At</span>{project.modifiedAt.toLocaleString("en-IN", {
+            <div className={styles.time}><span className={styles.bold}>Updated: </span>{project.modifiedAt.toLocaleString("en-IN", {
                     dateStyle: "medium",
                     timeStyle: "short"
                 })}</div>
-            <button className={styles.button}  onClick={()=>{
-            }}>Members</button>
+            <button className={styles.addMemberBtn} onClick={() => setShowAddMember(true)}>
+                + Add Member
+            </button>
+            {showAddMember && <AddMember emails={emails} setEmails={setEmails} projectId={project.id}/>}
         </div>
     )
 }
